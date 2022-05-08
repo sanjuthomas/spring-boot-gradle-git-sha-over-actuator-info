@@ -4,74 +4,46 @@ Tired of asking what version is running in QA/UAT/PROD? Make your life simple th
 
 There are only four simple changes you have to make to expose git commit sha over actuator/info endpoint.
 
-1. Add following dependency to application's [pom.xml](https://github.com/sanjuthomas/spring-boot-maven-git-info/blob/main/pom.xml#L32)
+1. Add ```org.springframework.boot:spring-boot-starter-actuator``` to build.gradle
+   
+2. Enable Spring actuator/info endpoint through adding following configuration to application.yml
 
 ```
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency> 
+   management.endpoints.web.exposure.include: info
 ```
 
-2. Enable Spring actuator/info endpoint through adding following configuration to [application.yml](https://github.com/sanjuthomas/spring-boot-maven-git-info/blob/main/src/main/resources/application.yaml#L1) file
+3. Add [gradle-git-properties](https://plugins.gradle.org/plugin/com.gorylenko.gradle-git-properties) plugin to application's build.gradle
 
 ```
-    management.endpoints.web.exposure.include: info
+    'com.gorylenko.gradle-git-properties' version '2.4.1'
 ```
 
-3. Add ```io.github.git-commit-id``` plugin to your application [pom.xml](https://github.com/sanjuthomas/spring-boot-maven-git-info/blob/main/pom.xml#L40)
+4. Add following Spring boot plugin DSL to build.gradle
 
 ```
-    <plugin>
-        <groupId>io.github.git-commit-id</groupId>
-        <artifactId>git-commit-id-maven-plugin</artifactId>
-        <version>5.0.0</version>
-        <executions>
-          <execution>
-            <id>get-the-git-infos</id>
-            <goals>
-              <goal>revision</goal>
-            </goals>
-            <phase>initialize</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <generateGitPropertiesFile>true</generateGitPropertiesFile>
-          <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-          <includeOnlyProperties>
-            <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
-            <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
-          </includeOnlyProperties>
-          <commitIdGenerationMode>full</commitIdGenerationMode>
-        </configuration>
-     </plugin>
+    springBoot {
+	buildInfo()
+}
 ```
 
-4. To generate build information add an execution block under ```spring-boot-maven-plugin``` in the [pom.xml](https://github.com/sanjuthomas/spring-boot-maven-git-info/blob/main/pom.xml#L66)
-
-```
-    <execution>
-        <goals>
-            <goal>build-info</goal>
-        </goals>
-    </execution>   
-```
-
-We are done! Check out your application's actuator/info endpoint. You should see a JSON like the following -
+Build the application using gradle and start the application. We are done! Check out your application's actuator/info endpoint. You should see a JSON like the following -
 
 ```
    {
-        "git":{
-            "commit":{
-            "id":"6416973"
-        }
+   "git":{
+      "branch":"main",
+      "commit":{
+         "id":"0f411eb",
+         "time":"2022-05-08T14:58:02Z"
+      }
    },
    "build":{
-      "artifact":"spring-boot-maven-git-info",
-      "name":"spring-boot-maven-git-info",
-      "time":"2022-05-07T23:25:40.010Z",
-      "version":"1.0-SNAPSHOT",
-      "group":"org.sanjuthomas"
+      "artifact":"demo",
+      "name":"demo",
+      "time":"2022-05-08T18:22:05.190Z",
+      "version":"0.0.1-SNAPSHOT",
+      "group":"com.sanjuthomas"
    }
+}
 ```
 
