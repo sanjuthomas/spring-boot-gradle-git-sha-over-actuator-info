@@ -30,20 +30,20 @@ Build the application using gradle and start the application. We are done! Check
 
 ```
    {
-   "git":{
-      "branch":"main",
-      "commit":{
-         "id":"0f411eb",
-         "time":"2022-05-08T14:58:02Z"
-      }
-   },
-   "build":{
-      "artifact":"demo",
-      "name":"demo",
-      "time":"2022-05-08T18:22:05.190Z",
-      "version":"0.0.1-SNAPSHOT",
-      "group":"com.sanjuthomas"
-   }
-}
+       "git":{
+          "branch":"main",
+          "commit":{
+             "id":"0f411eb",
+             "time":"2022-05-08T14:58:02Z"
+          }
+       },
+       "build":{
+          "artifact":"demo",
+          "name":"demo",
+          "time":"2022-05-08T18:22:05.190Z",
+          "version":"0.0.1-SNAPSHOT",
+          "group":"com.sanjuthomas"
+       }
+    }
 ```
 
