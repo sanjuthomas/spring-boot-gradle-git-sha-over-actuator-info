@@ -22,8 +22,8 @@ There are only four simple changes you have to make to expose git commit sha ove
 
 ```
     springBoot {
-	buildInfo()
-}
+	    buildInfo()
+    }
 ```
 
 Build the application using gradle and start the application. We are done! Check out your application's actuator/info endpoint. You should see a JSON like the following -
