@@ -22,7 +22,7 @@ There are only four simple changes you have to make to expose git commit sha ove
 
 ```
     springBoot {
-	    buildInfo()
+        buildInfo()
     }
 ```
 
